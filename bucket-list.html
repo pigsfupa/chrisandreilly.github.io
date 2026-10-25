@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Bucket List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="why-i-love-you.html">Why I Love You</a></li>
+      <li><a class="active" href="bucket-list.html">Bucket List</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><a href="about-chris.html">All About Chris</a></li>
+      <li><a href="open-when.html">Open When</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <span class="plant left">🌱</span>
+    <span class="plant right">🌿</span>
+    <span class="eyebrow">Together</span>
+    <h1>Our bucket list</h1>
+    <p>Check things off as we do them. Your checks stay saved on the device you use.</p>
+  </header>
+
+  <main class="container">
+    <div class="progress"><div class="progress-bar" id="bar"></div></div>
+    <p class="progress-text" id="progress-text"></p>
+
+    <!-- EDIT: change the text inside each <span>. Copy a whole <li>...</li> block to add more. -->
+    <ul class="checklist" id="checklist">
+      <li><label><input type="checkbox"><span>Go on a road trip together</span></label></li>
+      <li><label><input type="checkbox"><span>Visit a botanical garden</span></label></li>
+      <li><label><input type="checkbox"><span>Cook a new recipe together</span></label></li>
+      <li><label><input type="checkbox"><span>Have a picnic</span></label></li>
+      <li><label><input type="checkbox"><span>Watch the sunrise</span></label></li>
+      <li><label><input type="checkbox"><span>Grow a plant together</span></label></li>
+      <li><label><input type="checkbox"><span>[Add your own here]</span></label></li>
+    </ul>
+  </main>
+
+  <footer class="footer">Made with love 🌿</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

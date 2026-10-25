@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Site</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-    <p>This is my first website.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Little Garden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <ul>
+      <li><a class="active" href="index.html">Home</a></li>
+      <li><a href="why-i-love-you.html">Why I Love You</a></li>
+      <li><a href="bucket-list.html">Bucket List</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><a href="about-chris.html">All About Chris</a></li>
+      <li><a href="open-when.html">Open When</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <span class="plant left">🪴</span>
+    <span class="plant right">🌿</span>
+    <span class="eyebrow">Our scrapbook</span>
+    <h1>Welcome to our little garden</h1>
+    <p>A place where our story grows, one little moment at a time.</p>
+  </header>
+
+  <main class="container">
+
+    <section class="card sage">
+      <span class="icon">🌱</span>
+      <h2>Our anniversary</h2>
+      <!-- EDIT: put your real anniversary date here -->
+      <p>We started our story on <strong>[add your anniversary date here]</strong>.</p>
+    </section>
+
+    <div class="divider">🌿 🌿 🌿</div>
+
+    <section>
+      <h2>Why I made this</h2>
+      <!-- EDIT: write your own message here -->
+      <p>
+        [Write your own message here. Tell him why you made this website and what it means to you.
+        This is the first thing he'll read, so make it from the heart.]
+      </p>
+    </section>
+
+    <div class="divider">🌿 🌿 🌿</div>
+
+    <section>
+      <h2>Where to wander</h2>
+      <div class="grid">
+        <a class="card card-link" href="why-i-love-you.html">
+          <span class="icon">💚</span>
+          <h3>Why I Love You</h3>
+          <p>All my favorite reasons.</p>
+        </a>
+        <a class="card card-link beige" href="bucket-list.html">
+          <span class="icon">✅</span>
+          <h3>Our Bucket List</h3>
+          <p>Things we want to do together.</p>
+        </a>
+        <a class="card card-link sage" href="memories.html">
+          <span class="icon">📸</span>
+          <h3>Our Memories</h3>
+          <p>A gallery of our favorite moments.</p>
+        </a>
+        <a class="card card-link" href="about-chris.html">
+          <span class="icon">🌻</span>
+          <h3>All About Chris</h3>
+          <p>My favorite human, in detail.</p>
+        </a>
+        <a class="card card-link beige" href="open-when.html">
+          <span class="icon">💌</span>
+          <h3>Open When Letters</h3>
+          <p>For the days you need me.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">Made with love 🌿</footer>
+
+</body>
 </html>
