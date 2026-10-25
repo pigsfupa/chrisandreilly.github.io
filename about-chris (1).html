@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All About Chris</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Stat card styles */
+    .stats {
+      background: #fff;
+      border: 2px solid var(--sage);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem 1.75rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stats-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .stats-head h2 { margin: 0; font-size: clamp(1.25rem, 3vw, 1.6rem); }
+    .stats-head span { font-size: 1.5rem; }
+    .stat { margin-bottom: 1.1rem; }
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .stat-top .score { color: var(--soft); font-weight: 600; }
+    .stat-track {
+      background: var(--beige);
+      border-radius: 999px;
+      height: 0.9rem;
+      overflow: hidden;
+    }
+    .stat-fill {
+      height: 100%;
+      width: var(--val);
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--sage), var(--leaf));
+      animation: fill 1.2s ease-out both;
+    }
+    @keyframes fill {
+      from { width: 0; }
+      to { width: var(--val); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="why-i-love-you.html">Why I Love You</a></li>
+      <li><a href="bucket-list.html">Bucket List</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><a class="active" href="about-chris.html">All About Chris</a></li>
+      <li><a href="open-when.html">Open When</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <span class="plant left">🌻</span>
+    <span class="plant right">🌿</span>
+    <span class="eyebrow">My favorite human</span>
+    <h1>All about Chris</h1>
+    <p>The things that make him him.</p>
+  </header>
+
+  <main class="container">
+
+    <!--
+      STAT CARD
+      To change a stat: edit the name, the score text (like 95/100), and the number in style="--val: 95%".
+      To add a stat: copy a whole <div class="stat">...</div> block and paste it below the last one.
+    -->
+    <section class="stats">
+      <div class="stats-head">
+        <h2>Chris: Level 100 Boyfriend</h2>
+        <span>🎮</span>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top"><span>Intelligence</span><span class="score">100/100</span></div>
+        <div class="stat-track"><div class="stat-fill" style="--val: 100%"></div></div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top"><span>Cooking skills</span><span class="score">95/100</span></div>
+        <div class="stat-track"><div class="stat-fill" style="--val: 95%"></div></div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top"><span>Boyfriend skills</span><span class="score">100/100</span></div>
+        <div class="stat-track"><div class="stat-fill" style="--val: 100%"></div></div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top"><span>Nerdiness</span><span class="score">100/100</span></div>
+        <div class="stat-track"><div class="stat-fill" style="--val: 100%"></div></div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top"><span>Yapping abilities</span><span class="score">99/100</span></div>
+        <div class="stat-track"><div class="stat-fill" style="--val: 99%"></div></div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card sage">
+        <span class="icon">⭐</span>
+        <h2>His best qualities</h2>
+        <!-- EDIT: replace with your own -->
+        <p>[Write about the qualities you admire most.]</p>
+      </section>
+      <section class="card beige">
+        <span class="icon">💚</span>
+        <h2>Why he's my favorite human</h2>
+        <p>[Tell him what makes him your favorite person.]</p>
+      </section>
+      <section class="card">
+        <span class="icon">🌱</span>
+        <h2>Things I love about him</h2>
+        <p>[The little things: his laugh, his habits, how he treats people.]</p>
+      </section>
+      <section class="card sage">
+        <span class="icon">🌻</span>
+        <h2>His favorites</h2>
+        <p>[Food, music, shows, places. Whatever's fun to remember.]</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">Made with love 🌿</footer>
+
+</body>
+</html>
