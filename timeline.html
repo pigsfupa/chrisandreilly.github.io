@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Timeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .timeline {
+      position: relative;
+      max-width: 54rem;
+      margin: 0 auto;
+      padding: 0;
+      list-style: none;
+    }
+    /* the vertical vine */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      border-left: 3px dashed var(--sage);
+      transform: translateX(-50%);
+    }
+    .event {
+      position: relative;
+      width: 50%;
+      padding: 0 2.5rem 2.5rem 0;
+      text-align: right;
+    }
+    .event:nth-child(even) {
+      margin-left: 50%;
+      padding: 0 0 2.5rem 2.5rem;
+      text-align: left;
+    }
+    /* the leaf marker on the vine */
+    .event::after {
+      content: '🌱';
+      position: absolute;
+      top: 0;
+      right: -1.1rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      border: 2px solid var(--sage);
+      border-radius: 50%;
+      font-size: 1.1rem;
+    }
+    .event:nth-child(even)::after { right: auto; left: -1.1rem; }
+
+    .event-card {
+      background: #fff;
+      border: 2px solid var(--beige);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.1rem 1.3rem 1.3rem;
+    }
+    .event:nth-child(3n+1) .event-card { background: #E6EDE1; border-color: var(--sage); }
+    .event:nth-child(3n+2) .event-card { background: var(--beige); border-color: var(--sand); }
+
+    .event-date {
+      display: inline-block;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 0.25rem;
+    }
+    .event-card h3 { margin: 0 0 0.4rem; font-size: 1.25rem; }
+    .event-card p { margin: 0; color: var(--soft); }
+    .event-card img {
+      width: 100%;
+      max-height: 15rem;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 0.9rem;
+      display: block;
+    }
+
+    @media (max-width: 40rem) {
+      .timeline::before { left: 1.1rem; }
+      .event, .event:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 0 2rem 3.2rem;
+        text-align: left;
+      }
+      .event::after, .event:nth-child(even)::after { left: 0; right: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="why-i-love-you.html">Why I Love You</a></li>
+      <li><a href="bucket-list.html">Bucket List</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><a href="about-chris.html">All About Chris</a></li>
+      <li><a href="open-when.html">Open When</a></li>
+      <li><a class="active" href="timeline.html">Timeline</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <span class="plant left">🌱</span>
+    <span class="plant right">🌿</span>
+    <span class="eyebrow">Our story</span>
+    <h1>Our timeline</h1>
+    <p>Every little moment, growing into something big.</p>
+  </header>
+
+  <main class="container">
+    <!--
+      HOW TO EDIT:
+      - Each moment is one <li class="event">...</li> block.
+      - Change the date, the title, and the sentence inside <p>.
+      - To add a moment, copy a whole <li class="event">...</li> block and paste it where you want it.
+        Events alternate left and right on their own.
+      - To add a photo, put an <img src="..."> line before the closing </div> of the card.
+        See the examples below. To remove a photo, delete its <img> line.
+    -->
+    <ol class="timeline">
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">[Add date]</span>
+          <h3>The day we met</h3>
+          <p>[Write what you remember about meeting him.]</p>
+        </div>
+      </li>
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">[Add date]</span>
+          <h3>Our first double date</h3>
+          <p>[What did you do? What do you remember most?]</p>
+        </div>
+      </li>
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">July 29, 2026</span>
+          <h3>Our story begins</h3>
+          <p>[The day we made it official.]</p>
+        </div>
+      </li>
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">[Add date]</span>
+          <h3>ACL</h3>
+          <p>[A favorite moment from the festival.]</p>
+          <img src="chrisimages/chris%20photo%20images/image%3Aacl.jpeg" alt="Us at ACL" loading="lazy" onerror="this.remove()">
+        </div>
+      </li>
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">[Add date]</span>
+          <h3>Baseball game</h3>
+          <p>[Who won? Did you eat too many snacks?]</p>
+          <img src="chrisimages/chris%20photo%20images/baseballgame.jpg" alt="At a baseball game" loading="lazy" onerror="this.remove()">
+        </div>
+      </li>
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">[Add date]</span>
+          <h3>Oktoberfest</h3>
+          <p>[Write a memory from the day.]</p>
+          <img src="chrisimages/chris%20photo%20images/oktoberfest2.jpg" alt="At Oktoberfest" loading="lazy" onerror="this.remove()">
+        </div>
+      </li>
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">[Add date]</span>
+          <h3>Pumpkin season</h3>
+          <p>[Pumpkin patch memories.]</p>
+          <img src="chrisimages/chrispumpkin.jpg" alt="Chris with a pumpkin" loading="lazy" onerror="this.remove()">
+        </div>
+      </li>
+
+      <li class="event">
+        <div class="event-card">
+          <span class="event-date">Still growing</span>
+          <h3>What's next</h3>
+          <p>[Something you're looking forward to together.]</p>
+        </div>
+      </li>
+
+    </ol>
+  </main>
+
+  <footer class="footer">Made with love 🌿</footer>
+
+</body>
+</html>
