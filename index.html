@@ -117,5 +117,162 @@
     cursor: pointer;
   }
 </style>
+
+<!-- WELCOME SCREEN FOR CHRIS -->
+
+<style>
+  #welcome-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #f7f3ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: opacity 0.7s ease,
+                visibility 0.7s ease;
+  }
+
+  #welcome-screen.closed {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .welcome-card {
+    background: #fffdf8;
+    border: 2px solid #d1ddc7;
+    border-radius: 25px;
+    box-shadow: 0 12px 35px #40583a18;
+    padding: 45px 35px;
+    width: min(100%, 520px);
+    text-align: center;
+    animation: welcomeAppear 0.8s ease both;
+  }
+
+  .welcome-flower {
+    font-size: 45px;
+    margin-bottom: 15px;
+  }
+
+  .welcome-card h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 32px;
+    color: #3e6146;
+    margin: 10px 0 22px;
+  }
+
+  .welcome-card p {
+    font-family: 'Nunito', sans-serif;
+    color: #596f5c;
+    font-size: 16px;
+    line-height: 1.9;
+  }
+
+  .welcome-button {
+    background: #73916c;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 28px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.2s ease,
+                transform 0.2s ease;
+  }
+
+  .welcome-button:hover {
+    background: #587952;
+    transform: translateY(-3px);
+  }
+
+  @keyframes welcomeAppear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #welcome-screen,
+    .welcome-card,
+    .welcome-button {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>
+
+<div id="welcome-screen" role="dialog"
+     aria-modal="true"
+     aria-labelledby="welcome-title">
+
+  <div class="welcome-card">
+
+    <div class="welcome-flower">🌿 💌 🌷</div>
+
+    <h1 id="welcome-title">Hi, handsome ♡</h1>
+
+    <p>
+      I made you a little something.
+    </p>
+
+    <p>
+      Since you love coding so much,
+      I thought I'd try learning a little
+      bit of your world so I could create
+      something just for you.
+    </p>
+
+    <p>
+      This is our own little corner of
+      the internet, filled with memories,
+      love letters, and a few surprises.
+    </p>
+
+    <p>
+      I hope you love exploring it as much
+      as I loved making it for you.
+    </p>
+
+    <p>
+      I love you so much. ♡
+    </p>
+
+    <button class="welcome-button"
+            id="enter-world-button">
+      Enter Our Little World ♡
+    </button>
+
+  </div>
+</div>
+
+<script>
+  const welcomeScreen =
+    document.getElementById("welcome-screen");
+
+  const enterButton =
+    document.getElementById("enter-world-button");
+
+  enterButton.addEventListener("click", () => {
+    welcomeScreen.classList.add("closed");
+
+    // Remove overlay after fade-out
+    setTimeout(() => {
+      welcomeScreen.remove();
+    }, 750);
+  });
+</script>
+
+<!-- END WELCOME SCREEN -->
+
 </body>
 </html>
