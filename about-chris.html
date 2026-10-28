@@ -142,5 +142,396 @@
 
   <footer class="footer">Made with love 🌿</footer>
 
+<!-- SECRET FELINE FBI -->
+
+<style>
+#cat-secret-button {
+  position: fixed;
+  bottom: 22px;
+  left: 20px;
+  z-index: 1000;
+  background: transparent;
+  border: none;
+  padding: 5px;
+  opacity: 0.38;
+  cursor: pointer;
+  transition: opacity .2s, transform .2s;
+}
+
+#cat-secret-button:hover,
+#cat-secret-button:focus-visible {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+#cat-secret-button svg {
+  width: 38px;
+  height: 38px;
+  fill: #506b4d;
+}
+
+#cat-database {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40000;
+  background: rgba(28, 42, 31, 0.88);
+  padding: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+#cat-database.open {
+  display: flex;
+}
+
+.cat-db-panel {
+  width: min(100%, 720px);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fffdf8;
+  border: 4px double #b7c9ab;
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  color: #405b43;
+}
+
+.cat-db-panel h2,
+.cat-db-panel h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  color: #38553e;
+}
+
+.cat-db-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.cat-db-suspect {
+  background: #e7ecdf;
+  border: 2px solid #c6d5bf;
+  border-radius: 14px;
+  padding: 14px 8px;
+  cursor: pointer;
+  font: inherit;
+  color: #38553e;
+}
+
+.cat-db-suspect:hover {
+  background: #d9e5d2;
+}
+
+.cat-db-suspect img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 9px;
+}
+
+.cat-db-emoji {
+  font-size: 42px;
+}
+
+.cat-db-name {
+  display: block;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.cat-db-file {
+  background: #f5eee4;
+  padding: 18px;
+  border-radius: 14px;
+  margin: 18px 0;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.cat-db-file img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto 15px;
+}
+
+.cat-db-close {
+  background: #77946d;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  padding: 12px 22px;
+  margin: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cat-db-hidden {
+  display: none !important;
+}
+
+@media (max-width: 550px) {
+  .cat-db-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+
+<button id="cat-secret-button"
+        type="button"
+        aria-label="Secret cat database"
+        title="Meow?">
+  <svg viewBox="0 0 64 64"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-hidden="true">
+    <path d="M14 27 L16 8 L29 18
+             Q32 16 37 18 L49 8 L51 29
+             Q56 38 49 48 Q43 55 32 55
+             Q19 55 14 47 Q8 36 14 27Z"/>
+  </svg>
+</button>
+
+<div id="cat-database"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="cat-db-title">
+
+  <div class="cat-db-panel">
+    <p>🚨 CLASSIFIED INFORMATION 🚨</p>
+    <h2 id="cat-db-title">The Feline FBI</h2>
+    <p>10 suspects. Zero remorse. All unemployed.</p>
+    <p>Click a criminal to view their charges.</p>
+
+    <h3>Reilly's Criminal Organization</h3>
+    <div class="cat-db-grid" id="reilly-cat-grid"></div>
+
+    <h3>Chris's Criminal Organization</h3>
+    <div class="cat-db-grid" id="chris-cat-grid"></div>
+
+    <div id="cat-case-file"
+         class="cat-db-file cat-db-hidden"
+         aria-live="polite">
+    </div>
+
+    <button id="cat-db-close"
+            type="button"
+            class="cat-db-close">
+      Close Classified Files 🔒
+    </button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  // CUSTOMIZE YOUR TEN CATS HERE
+  // Add image paths after uploading photos to GitHub.
+
+  const cats = [
+    {
+      name: "Reilly's Cat #1",
+      owner: "Reilly",
+      photo: "",
+      crime: "Aggravated 3 AM zoomies",
+      notes: "Suspect refuses to cooperate."
+    },
+    {
+      name: "Reilly's Cat #2",
+      owner: "Reilly",
+      photo: "",
+      crime: "Grand theft of human food",
+      notes: "Has never paid for a single meal."
+    },
+    {
+      name: "Reilly's Cat #3",
+      owner: "Reilly",
+      photo: "",
+      crime: "Destruction of private property",
+      notes: "Maintained eye contact while committing the crime."
+    },
+    {
+      name: "Chris's Cat #1",
+      owner: "Chris",
+      photo: "",
+      crime: "Disturbing the peace",
+      notes: "Screams for food despite being fed."
+    },
+    {
+      name: "Chris's Cat #2",
+      owner: "Chris",
+      photo: "",
+      crime: "Unlawful occupation of furniture",
+      notes: "Refuses to vacate the bed."
+    },
+    {
+      name: "Chris's Cat #3",
+      owner: "Chris",
+      photo: "",
+      crime: "Attempted murder of houseplants",
+      notes: "All plants have requested protection."
+    },
+    {
+      name: "Chris's Cat #4",
+      owner: "Chris",
+      photo: "",
+      crime: "Reckless hallway speeding",
+      notes: "Repeatedly exceeds household speed limits."
+    },
+    {
+      name: "Chris's Cat #5",
+      owner: "Chris",
+      photo: "",
+      crime: "Identity theft",
+      notes: "Pretends to be innocent for treats."
+    },
+    {
+      name: "Chris's Cat #6",
+      owner: "Chris",
+      photo: "",
+      crime: "Conspiracy to overthrow management",
+      notes: "Believed to be the mastermind."
+    },
+    {
+      name: "Chris's Cat #7",
+      owner: "Chris",
+      photo: "",
+      crime: "Tax evasion and chronic unemployment",
+      notes: "Lives rent free. Demands benefits."
+    }
+  ];
+
+  const overlay = document.getElementById("cat-database");
+  const trigger = document.getElementById("cat-secret-button");
+  const closeButton = document.getElementById("cat-db-close");
+  const file = document.getElementById("cat-case-file");
+  const panel = document.querySelector(".cat-db-panel");
+
+  let previousFocus = null;
+
+  function makePhoto(cat) {
+    if (!cat.photo) {
+      const icon = document.createElement("div");
+      icon.className = "cat-db-emoji";
+      icon.textContent = "🐱";
+      return icon;
+    }
+
+    const image = document.createElement("img");
+    image.src = cat.photo;
+    image.alt = "Mugshot of " + cat.name;
+    image.onerror = () => {
+      const icon = document.createElement("div");
+      icon.className = "cat-db-emoji";
+      icon.textContent = "🐱";
+      image.replaceWith(icon);
+    };
+    return image;
+  }
+
+  function showFile(cat) {
+    file.replaceChildren();
+
+    const photo = makePhoto(cat);
+    const heading = document.createElement("h3");
+    heading.textContent = "🚨 WANTED: " + cat.name;
+
+    const info = document.createElement("div");
+    [
+      ["Affiliation", cat.owner],
+      ["Criminal Charges", cat.crime],
+      ["Case Notes", cat.notes],
+      ["Current Status", "At large. Probably napping."]
+    ].forEach(([label, value]) => {
+      const p = document.createElement("p");
+      const strong = document.createElement("strong");
+      strong.textContent = label + ": ";
+      p.append(strong, document.createTextNode(value));
+      info.appendChild(p);
+    });
+
+    file.append(photo, heading, info);
+    file.classList.remove("cat-db-hidden");
+    file.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  }
+
+  cats.forEach(cat => {
+    const grid = document.getElementById(
+      cat.owner === "Reilly"
+        ? "reilly-cat-grid"
+        : "chris-cat-grid"
+    );
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "cat-db-suspect";
+
+    const name = document.createElement("span");
+    name.className = "cat-db-name";
+    name.textContent = cat.name;
+
+    button.append(makePhoto(cat), name);
+    button.addEventListener("click", () => showFile(cat));
+    grid.appendChild(button);
+  });
+
+  function openDatabase() {
+    previousFocus = document.activeElement;
+    file.classList.add("cat-db-hidden");
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+    panel.scrollTop = 0;
+    closeButton.focus();
+  }
+
+  function closeDatabase() {
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+    if (previousFocus) previousFocus.focus();
+  }
+
+  trigger.addEventListener("click", openDatabase);
+  closeButton.addEventListener("click", closeDatabase);
+
+  overlay.addEventListener("click", event => {
+    if (event.target === overlay) closeDatabase();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (!overlay.classList.contains("open")) return;
+
+    if (event.key === "Escape") {
+      closeDatabase();
+    }
+
+    if (event.key === "Tab") {
+      const buttons = [
+        ...panel.querySelectorAll("button:not([disabled])")
+      ];
+      const first = buttons[0];
+      const last = buttons[buttons.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+})();
+</script>
+
+<!-- END SECRET FELINE FBI -->
+
 </body>
 </html>
