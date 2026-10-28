@@ -286,224 +286,159 @@
 
 <!-- END WELCOME SCREEN -->
 
+
+
 <!-- SECRET MEME BUTTON -->
 
 <style>
-.surprise-meme {
+#secret-meme-button {
   display: block;
-  width: 100%;
-  max-width: 320px;
-  max-height: 55vh;
-  object-fit: contain;
-  margin: 15px auto;
-  border-radius: 12px;
-}
-
-.meme-card {
-  max-height: 90vh;
-  overflow-y: auto;
-}
-<style>
-#meme-trigger {
-  display: block;
-  margin: 35px auto;
+  margin: 30px auto;
+  border: none;
   background: transparent;
-  border: 0;
   color: #a1ad97;
   font-family: 'Nunito', sans-serif;
   font-size: 11px;
-  cursor: pointer;
   opacity: 0.6;
+  cursor: pointer;
 }
 
-#meme-trigger:hover {
+#secret-meme-button:hover {
   opacity: 1;
-  color: #446548;
+  color: #405c43;
 }
 
-#meme-popup {
+#secret-meme-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 20000;
-  background: #202820b8;
-  padding: 20px;
+  z-index: 30000;
+  background: rgba(0, 0, 0, 0.85);
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
-#meme-popup.visible {
+#secret-meme-overlay.show {
   display: flex;
 }
 
-.meme-card {
+.secret-meme-box {
+  width: min(100%, 440px);
+  max-height: 90vh;
+  overflow-y: auto;
   background: #fffdf8;
-  border: 3px solid #a9c5a0;
-  border-radius: 22px;
-  padding: 30px 24px;
-  width: min(100%, 430px);
+  padding: 20px;
+  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 12px 35px #0003;
-  animation: memeAppear 0.25s ease;
+  box-shadow: 0 15px 50px #0005;
 }
 
-.meme-card h2 {
-  color: #3e6146;
+.secret-meme-box h2 {
+  color: #c84d7b;
   font-family: 'Fraunces', Georgia, serif;
 }
 
-#meme-emoji {
-  font-size: 80px;
-  margin: 15px;
+.secret-meme-box img {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+  max-height: 60vh;
+  object-fit: contain;
+  margin: 15px auto;
+  border-radius: 10px;
 }
 
-#meme-message {
+.secret-meme-box p {
+  color: #526650;
   font-family: 'Nunito', sans-serif;
-  color: #556b56;
-  line-height: 1.7;
 }
 
-.meme-close {
-  margin-top: 18px;
+.secret-meme-close {
   background: #77946d;
   color: white;
   border: none;
+  padding: 12px 22px;
   border-radius: 25px;
-  padding: 12px 25px;
   cursor: pointer;
-}
-
-@keyframes memeAppear {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .meme-card { animation: none; }
 }
 </style>
 
-<button id="meme-trigger" type="button">
+<button type="button" id="secret-meme-button">
   definitely don't click
 </button>
 
-
-<div id="meme-popup" role="dialog"
+<div id="secret-meme-overlay"
+     role="dialog"
      aria-modal="true"
-     aria-labelledby="meme-title">
+     aria-labelledby="secret-meme-title">
 
-  <div class="meme-card">
+  <div class="secret-meme-box">
 
-    <h2 id="meme-title">CHRISTOPHER. 💀</h2>
+    <h2 id="secret-meme-title">
+      CHRISTOPHER. 💀
+    </h2>
 
     <img
       src="chrisimages/funny-cat.jpeg"
-      alt="A very glamorous cat-filter meme"
-      class="surprise-meme"
+      alt="A hilarious cat-filter meme"
     >
 
-    <p id="meme-message">
+    <p>
       You really clicked that button.
       Incredible decision-making skills.
     </p>
 
-    <button class="meme-close" id="meme-close">
+    <button type="button"
+            class="secret-meme-close"
+            id="secret-meme-close">
       I wish I could unsee this.
     </button>
 
   </div>
 </div>
 
-
 <script>
-const memeList = [
-  {
-    emoji: "🐈",
-    title: "YOU FOOL.",
-    message: "You fell for it. The cats are disappointed in you."
-  },
-  {
-    emoji: "💀",
-    title: "CHRISTOPHER.",
-    message: "You're a software engineer and you clicked a suspicious button? Interesting."
-  },
-  {
-    emoji: "🧍",
-    title: "BRO.",
-    message: "You really thought something romantic was gonna happen, huh?"
-  },
-  {
-    emoji: "🍟",
-    title: "URGENT ALERT.",
-    message: "Your girlfriend requires Taco Bell nacho fries. This is not a drill."
-  },
-  {
-    emoji: "🤡",
-    title: "CONGRATULATIONS!",
-    message: "You've been promoted to Head of Questionable Decisions."
+(function () {
+  const trigger = document.getElementById(
+    "secret-meme-button"
+  );
+
+  const overlay = document.getElementById(
+    "secret-meme-overlay"
+  );
+
+  const closeButton = document.getElementById(
+    "secret-meme-close"
+  );
+
+  if (!trigger || !overlay || !closeButton) return;
+
+  trigger.addEventListener("click", function () {
+    overlay.classList.add("show");
+    closeButton.focus();
+  });
+
+  function closePopup() {
+    overlay.classList.remove("show");
+    trigger.focus();
   }
-];
 
-const memeTrigger = document.getElementById("meme-trigger");
-const memePopup = document.getElementById("meme-popup");
-const memeClose = document.getElementById("meme-close");
-let previousFocus;
+  closeButton.addEventListener("click", closePopup);
 
-memeTrigger.addEventListener("click", () => {
-  previousFocus = document.activeElement;
+  overlay.addEventListener("click", function (event) {
+    if (event.target === overlay) {
+      closePopup();
+    }
+  });
 
-  document.getElementById("meme-title").textContent =
-    "CHRISTOPHER. 💀";
-
-  document.getElementById("meme-message").textContent =
-    "You really clicked that button. Incredible decision-making skills.";
-
-  memePopup.classList.add("visible");
-  memeClose.focus();
-});
-
-  document.getElementById("meme-emoji").textContent =
-    randomMeme.emoji;
-
-  document.getElementById("meme-title").textContent =
-    randomMeme.title;
-
-  document.getElementById("meme-message").textContent =
-    randomMeme.message;
-
-  previousFocus = document.activeElement;
-  memePopup.classList.add("visible");
-  memeClose.focus();
-});
-
-function closeMeme() {
-  memePopup.classList.remove("visible");
-  if (previousFocus) previousFocus.focus();
-}
-
-memeClose.addEventListener("click", closeMeme);
-
-memePopup.addEventListener("click", event => {
-  if (event.target === memePopup) closeMeme();
-});
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape" &&
-      memePopup.classList.contains("visible")) {
-    closeMeme();
-  }
-  if (event.key === "Tab" &&
-      memePopup.classList.contains("visible")) {
-    event.preventDefault();
-    memeClose.focus();
-  }
-});
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" &&
+        overlay.classList.contains("show")) {
+      closePopup();
+    }
+  });
+})();
 </script>
 
 <!-- END SECRET MEME BUTTON -->
