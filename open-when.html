@@ -129,5 +129,233 @@
 
   <footer class="footer">Made with love 🌿</footer>
 
+<!-- INTERACTIVE ENVELOPES FOR CHRIS -->
+
+<style>
+
+/* Two-column envelope layout */
+.letters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+/* Each letter is a clickable envelope */
+.letters details.letter {
+  margin: 0;
+  padding: 0;
+  background: #e9e1cf;
+  border: 2px solid #d8cbb3;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(55, 75, 53, 0.10);
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* Alternate scrapbook colors */
+.letters details.letter:nth-child(3n+1) {
+  background: #dce6d6;
+}
+
+.letters details.letter:nth-child(3n+2) {
+  background: #f1dce2;
+}
+
+.letters details.letter:nth-child(3n+3) {
+  background: #eee2cd;
+}
+
+/* Clickable envelope front */
+.letters details.letter > summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 24px 18px;
+  color: #3d5240;
+  background: transparent;
+  text-align: center;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+/* Hide default dropdown triangle */
+.letters details.letter > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Decorative envelope icon */
+.letters details.letter > summary::before {
+  content: "💌";
+  display: block;
+  font-size: 55px;
+  line-height: 1.3;
+  margin-bottom: 18px;
+  transition: transform 0.4s ease;
+}
+
+/* A little instruction */
+.letters details.letter > summary::after {
+  content: "♡ click to open ♡";
+  display: block;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: #77896e;
+  margin-top: 16px;
+}
+
+/* Hover effect */
+.letters details.letter:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(55,75,53,0.16);
+}
+
+.letters details.letter:hover > summary::before {
+  transform: rotate(-12deg) scale(1.12);
+}
+
+/* Opened envelope spans both columns */
+.letters details.letter[open] {
+  grid-column: 1 / -1;
+  background: #fffdf8;
+  border-color: #a5bea0;
+}
+
+/* Opened envelope header */
+.letters details.letter[open] > summary {
+  min-height: 110px;
+  background: #e6edde;
+  border-bottom: 2px dashed #bdcdb6;
+}
+
+.letters details.letter[open] > summary::before {
+  content: "💌";
+  font-size: 32px;
+  margin-bottom: 8px;
+  transform: rotate(-12deg);
+}
+
+.letters details.letter[open] > summary::after {
+  content: "♡ click to close ♡";
+}
+
+/* The love letter itself */
+.letters details.letter > .body {
+  display: block;
+  margin: 0;
+  padding: 35px 40px;
+  background: #fffdf8;
+  color: #465747;
+  text-align: left;
+  line-height: 1.9;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+}
+
+/* Sweet heading inside the letter */
+.letters details.letter > .body::before {
+  content: "To my favorite person, ♡";
+  display: block;
+  font-family: 'Fraunces', Georgia, serif;
+  color: #b7798a;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Signature after each letter */
+.letters details.letter > .body::after {
+  content: "Forever yours, Reilly ♡";
+  display: block;
+  margin-top: 25px;
+  text-align: right;
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 19px;
+  color: #b7798a;
+}
+
+/* Slide-out animation */
+.letters details.letter[open] > .body {
+  animation: revealLetter 0.65s ease both;
+}
+
+@keyframes revealLetter {
+  from {
+    opacity: 0;
+    transform: translateY(-25px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 650px) {
+  .letters {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .letters details.letter[open] {
+    grid-column: 1;
+  }
+
+  .letters details.letter > .body {
+    padding: 25px 20px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .letters details.letter,
+  .letters details.letter > summary::before,
+  .letters details.letter[open] > .body {
+    transition: none;
+    animation: none;
+  }
+}
+
+</style>
+
+<script>
+
+/* Close other envelopes when one is opened */
+
+const envelopes = document.querySelectorAll(
+  ".letters details.letter"
+);
+
+envelopes.forEach(envelope => {
+
+  envelope.addEventListener("toggle", () => {
+
+    if (envelope.open) {
+
+      envelopes.forEach(other => {
+
+        if (other !== envelope) {
+          other.open = false;
+        }
+
+      });
+
+    }
+
+  });
+
+});
+
+</script>
+
+<!-- END INTERACTIVE ENVELOPES -->
+
 </body>
 </html>
