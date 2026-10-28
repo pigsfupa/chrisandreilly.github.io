@@ -112,9 +112,12 @@
     </p>
     <p>Choose wisely. Our relationship depends on it.</p>
     <p>(Kidding. Mostly.)</p>
-    <button class="main-button" onclick="startQuiz()">
-      Begin Exam 💌
-    </button>
+   <button
+  id="result-button"
+  class="main-button"
+  onclick="resultAction()">
+  Continue 💗
+</button>
   </div>
 
   <div id="quiz-screen" class="hidden">
@@ -160,71 +163,122 @@
   </div>
 </main>
 
-<script>
-// EDIT YOUR QUESTIONS HERE!
-// Answers use positions: 0 = first, 1 = second,
-// 2 = third, 3 = fourth.
 
-const questions = [
+<script>
+// ROUND 1: THE BOYFRIEND BASICS
+// Change the sample answers to your real answers!
+
+const round1 = [
   {
-    question: "What is our favorite restruant?",
-    options: [
-      "Mosero",
-      "Hudson House",
-      "Chuys",
-      "Blue Goose"
-    ],
+    question: "When did we officially start dating?",
+    options: ["July 27", "July 29", "August 1", "July 30"],
     correct: 1,
-    wrong: "CHRIS. Check you bank statements smh?! 😭"
+    wrong: "CHRIS. OUR ANNIVERSARY?! 😭"
   },
   {
     question: "What's my favorite snack?",
-    options: [
-      "Spicy Doritos",
-      "Chocolate",
-      "Popcorn",
-      "Cucumbers"
-    ],
+    options: ["Chips", "Chocolate", "Popcorn", "Cookies"],
     correct: 0,
     wrong: "Do you even know who I am? 🙄"
   },
   {
-    question: "What is one thing I can't live without",
-    options: [
-      "My cats",
-      "My phone",
-      "Music",
-      "My vape"
-    ],
-    correct: 0,
-    wrong: "Unbelievable. Truly unbelievable. You think so little of me?"
+    question: "What's my favorite thing to do together?",
+    options: ["Watch movies", "Go on dates", "Cuddle", "Cook together"],
+    correct: 2,
+    wrong: "Unbelievable. Truly unbelievable."
   },
   {
     question: "What's my dream vacation?",
-    options: [
-      "Italy",
-      "Oregon",
-      "Greece",
-      "Mexico"
-    ],
+    options: ["Italy", "Japan", "Greece", "France"],
     correct: 0,
     wrong: "Guess we're not going there now 💀"
   },
   {
     question: "Who is the funniest person in our relationship?",
-    options: [
-      "Chris",
-      "Reilly",
-      "Obviously Reilly",
-      "Still Reilly"
-    ],
-    correct: 2,
+    options: ["Chris", "Reilly", "The cats", "Neither of us"],
+    correct: 1,
     wrong: "WRONG. It's obviously me. 💅"
   }
 ];
 
+// ROUND 2: DO YOU REALLY KNOW REILLY?
+
+const round2 = [
+  {
+    question: "What's the quickest way to annoy Reilly?",
+    options: [
+      "Interrupting her",
+      "Smacking your food",
+      "Leaving lights on",
+      "Stealing blankets"
+    ],
+    correct: 1,
+    wrong: "CHRIS. CLOSE YOUR MOUTH WHEN YOU CHEW. 😭"
+  },
+  {
+    question: "What food could Reilly eat every single day?",
+    options: [
+      "Mac and cheese",
+      "Sushi",
+      "Taco Bell nacho fries",
+      "Chicken nuggets"
+    ],
+    correct: 2,
+    wrong: "The nacho fries disrespect is INSANE."
+  },
+  {
+    question: "What's Reilly's biggest pet peeve?",
+    options: [
+      "Slow drivers",
+      "People borrowing things",
+      "Loud noises",
+      "Last-minute plans and no communication"
+    ],
+    correct: 3,
+    wrong: "A LITTLE COMMUNICATION WOULD BE NICE. 🙄"
+  },
+  {
+    question: "What would Reilly buy first if she won the lottery?",
+    options: [
+      "Another cat",
+      "A brand-new car",
+      "A designer handbag",
+      "A vacation"
+    ],
+    correct: 0,
+    wrong: "HOW DID YOU NOT IMMEDIATELY THINK CAT?! 🐈"
+  },
+  {
+    question: "What will Reilly NEVER admit Chris is better at?",
+    options: [
+      "Cooking",
+      "Driving",
+      "Video games",
+      "Being funny"
+    ],
+    correct: 1,
+    wrong: "I'M STILL THE BETTER DRIVER. THIS PROVES NOTHING."
+  },
+  {
+    question: "Who said 'I love you' first?",
+    options: [
+      "Reilly",
+      "We said it together",
+      "Chris",
+      "The cats"
+    ],
+    correct: 2,
+    wrong: "CHRISTOPHER. HOW DID YOU FORGET THIS?! 😭"
+  }
+];
+
+let currentRound = 1;
 let currentQuestion = 0;
 let score = 0;
+
+function getQuestions() {
+  return currentRound === 1 ? round1 : round2;
+}
 
 function showScreen(id) {
   ["start-screen", "quiz-screen", "result-screen"]
@@ -235,24 +289,37 @@ function showScreen(id) {
 }
 
 function startQuiz() {
+  currentRound = 1;
+  startRound();
+}
+
+function startRound() {
   currentQuestion = 0;
   score = 0;
+
   document.getElementById("surprise")
     .classList.add("hidden");
+
   showScreen("quiz-screen");
   showQuestion();
 }
 
 function showQuestion() {
+  const questions = getQuestions();
   const q = questions[currentQuestion];
 
+  const roundTitle = currentRound === 1
+    ? "💗 Round 1: The Boyfriend Basics"
+    : "🔥 Round 2: Do You REALLY Know Reilly?";
+
   document.getElementById("progress").textContent =
-    `Question ${currentQuestion + 1} of ${questions.length}`;
+    `${roundTitle} — Question ${currentQuestion + 1} of ${questions.length}`;
 
   document.getElementById("question").textContent =
     q.question;
 
   document.getElementById("feedback").textContent = "";
+
   document.getElementById("next-button")
     .classList.add("hidden");
 
@@ -269,7 +336,7 @@ function showQuestion() {
 }
 
 function checkAnswer(selected) {
-  const q = questions[currentQuestion];
+  const q = getQuestions()[currentQuestion];
   const buttons = document.querySelectorAll(".option");
   const feedback = document.getElementById("feedback");
 
@@ -279,7 +346,7 @@ function checkAnswer(selected) {
     score++;
     buttons[selected].classList.add("correct");
     feedback.textContent =
-      "Correct! Okay, maybe you do love me 💗";
+      "Okayyyy boyfriend, I see you! 💗";
   } else {
     buttons[selected].classList.add("wrong");
     buttons[q.correct].classList.add("correct");
@@ -293,7 +360,7 @@ function checkAnswer(selected) {
 function nextQuestion() {
   currentQuestion++;
 
-  if (currentQuestion < questions.length) {
+  if (currentQuestion < getQuestions().length) {
     showQuestion();
   } else {
     showResults();
@@ -303,27 +370,57 @@ function nextQuestion() {
 function showResults() {
   showScreen("result-screen");
 
-  const percent = Math.round(
-    (score / questions.length) * 100
-  );
+  const total = getQuestions().length;
+  const perfect = score === total;
+  const percent = Math.round((score / total) * 100);
 
-  document.getElementById("final-score").textContent =
-    `${score}/${questions.length} — ${percent}%`;
-
+  const scoreDisplay = document.getElementById("final-score");
   const message = document.getElementById("result-message");
+  const button = document.getElementById("result-button");
 
-  if (score === questions.length) {
+  scoreDisplay.textContent =
+    `Round ${currentRound}: ${score}/${total} — ${percent}%`;
+
+  if (currentRound === 1 && perfect) {
     message.textContent =
-      "100%?! YOU REALLY DO LOVE ME 😭💗";
+      "ROUND 1 PASSED! 🎉 Okay, so you know the basics. But can you handle the REAL girlfriend exam?";
+
+    button.textContent = "Unlock Round 2 🔓";
+
+  } else if (currentRound === 1) {
+    message.textContent =
+      "CHRIS. You need 100% to advance. Were you even paying attention?! 🙄";
+
+    button.textContent = "Retry Round 1 🔄";
+
+  } else if (perfect) {
+    message.textContent =
+      "100% ON ROUND 2?! FINE. YOU REALLY DO KNOW ME. 😭💗";
+
     document.getElementById("surprise")
       .classList.remove("hidden");
+
+    button.textContent = "Play Again 💕";
     celebrate();
-  } else if (percent >= 60) {
-    message.textContent =
-      "Not bad... but I expected more from my boyfriend 🙄";
+
   } else {
     message.textContent =
-      "Chris. We need to have a conversation. 💀";
+      "SO CLOSE. But you're not getting your prize until you get EVERYTHING right. 💅";
+
+    button.textContent = "Retry Round 2 🔄";
+  }
+}
+
+function resultAction() {
+  if (currentRound === 1 &&
+      score === round1.length) {
+    currentRound = 2;
+    startRound();
+  } else if (currentRound === 2 &&
+             score === round2.length) {
+    startQuiz();
+  } else {
+    startRound();
   }
 }
 
