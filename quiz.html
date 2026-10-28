@@ -527,7 +527,77 @@ function celebrate() {
     setTimeout(() => heart.remove(), 8500);
   }
 }
-</script>
+  
+function downloadCertificate() {
+  const certificate = document.getElementById("certificate");
 
+  // Open a clean, printable version of the certificate
+  const printWindow = window.open("", "_blank");
+
+  if (!printWindow) {
+    alert("Please allow pop-ups to save your certificate!");
+    return;
+  }
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Certified Reilly Expert</title>
+      <style>
+        body {
+          font-family: Georgia, serif;
+          background: #fff0f5;
+          text-align: center;
+          padding: 40px;
+          color: #743c50;
+        }
+        #certificate {
+          background: white;
+          border: 8px double #e9a4bd;
+          padding: 50px 30px;
+          max-width: 750px;
+          margin: auto;
+        }
+        h1, h2 { color: #d65b85; }
+        .certificate-heading {
+          letter-spacing: 2px;
+          font-size: 12px;
+        }
+        .certificate-seal { font-size: 60px; }
+        .certificate-name {
+          font-size: 40px;
+          font-style: italic;
+        }
+        .certificate-small {
+          font-size: 13px;
+          font-style: italic;
+        }
+        .certificate-signature {
+          margin-top: 30px;
+          font-size: 24px;
+          font-style: italic;
+        }
+        @media print {
+          body { background: white; padding: 0; }
+          @page { size: landscape; margin: 12mm; }
+        }
+      </style>
+    </head>
+    <body>
+      ${certificate.outerHTML}
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+  printWindow.focus();
+
+  // Chris can choose "Save as PDF" in the print dialog.
+  printWindow.print();
+}
+
+</script>
+  
 </body>
 </html>
