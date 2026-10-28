@@ -19,7 +19,6 @@
       <li><a href="about-chris.html">All About Chris</a></li>
       <li><a href="open-when.html">Open When</a></li>
       <li><a href="timeline.html">Timeline</a></li>
-     </li><a href="secret.html">💌 A Little Secret Just for You</a>
     </ul>
   </nav>
 
@@ -84,5 +83,34 @@
 
   <footer class="footer">Made with love 🌿</footer>
 
+<!-- Secret clickable heart for Chris -->
+<a href="secret.html"
+   class="hidden-heart"
+   title="Psst... click me 💌"
+   aria-label="Discover a secret message">
+  ♥
+</a>
+
+<style>
+  .hidden-heart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #e8a0b8;
+    text-decoration: none;
+    opacity: 0.55;
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .hidden-heart:hover,
+  .hidden-heart:focus-visible {
+    opacity: 1;
+    color: #d94f85;
+    transform: scale(1.5);
+    cursor: pointer;
+  }
+</style>
 </body>
 </html>
