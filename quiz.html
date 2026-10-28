@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Girlfriend Exam 💗</title>
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #fff0f5;
+    font-family: Georgia, serif;
+    color: #743c50;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    overflow-x: hidden;
+  }
+
+  .quiz-box {
+    background: white;
+    border-radius: 22px;
+    padding: 35px 25px;
+    width: min(85%, 460px);
+    box-shadow: 0 8px 30px #d88ca544;
+    position: relative;
+    z-index: 1;
+    margin: 30px auto;
+  }
+
+  h1, h2 { color: #d65b85; }
+
+  p { line-height: 1.7; }
+
+  .option {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 2px solid #f6c4d4;
+    border-radius: 12px;
+    background: #fff8fb;
+    color: #743c50;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .option:hover:not(:disabled) {
+    background: #ffe0eb;
+  }
+
+  .option:disabled {
+    cursor: default;
+    opacity: 0.8;
+  }
+
+  .correct { background: #d9f4de; }
+  .wrong { background: #ffd6d6; }
+
+  .main-button {
+    background: #e97ba2;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+
+  #feedback {
+    font-weight: bold;
+    min-height: 35px;
+  }
+
+  #progress {
+    font-size: 14px;
+    color: #b46b85;
+  }
+
+  .hidden { display: none; }
+
+  .heart {
+    position: fixed;
+    top: -30px;
+    pointer-events: none;
+    z-index: 5;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<main class="quiz-box">
+  <div id="start-screen">
+    <h1>The Girlfriend Exam 💗</h1>
+    <p>Dear Chris,</p>
+    <p>
+      You've been dating me for a while now,
+      so it's time to see if you've
+      actually been paying attention.
+    </p>
+    <p>Choose wisely. Our relationship depends on it.</p>
+    <p>(Kidding. Mostly.)</p>
+    <button class="main-button" onclick="startQuiz()">
+      Begin Exam 💌
+    </button>
+  </div>
+
+  <div id="quiz-screen" class="hidden">
+    <p id="progress"></p>
+    <h2 id="question"></h2>
+    <div id="answers"></div>
+    <p id="feedback" role="status"></p>
+    <button
+      id="next-button"
+      class="main-button hidden"
+      onclick="nextQuestion()">
+      Next Question →
+    </button>
+  </div>
+
+  <div id="result-screen" class="hidden">
+    <h1>Exam Results 🎀</h1>
+    <h2 id="final-score"></h2>
+    <p id="result-message"></p>
+
+    <div id="surprise" class="hidden">
+      <h2>YOU UNLOCKED A SECRET 💌</h2>
+      <p>
+        Congratulations, Christopher!
+        You officially know your girlfriend.
+      </p>
+      <p>
+        But seriously, I love that you pay attention
+        to all the little things about me.
+        Every day with you is my favorite.
+      </p>
+      <p>
+        Your prize is unlimited kisses,
+        cuddles, and a lifetime of me
+        being extremely annoying.
+      </p>
+      <p>Love you forever 💗</p>
+    </div>
+
+    <button class="main-button" onclick="startQuiz()">
+      Retake Exam 🔄
+    </button>
+  </div>
+</main>
+
+<script>
+// EDIT YOUR QUESTIONS HERE!
+// Answers use positions: 0 = first, 1 = second,
+// 2 = third, 3 = fourth.
+
+const questions = [
+  {
+    question: "What is our favorite restruant?",
+    options: [
+      "Mosero",
+      "Hudson House",
+      "Chuys",
+      "Blue Goose"
+    ],
+    correct: 1,
+    wrong: "CHRIS. Check you bank statements smh?! 😭"
+  },
+  {
+    question: "What's my favorite snack?",
+    options: [
+      "Spicy Doritos",
+      "Chocolate",
+      "Popcorn",
+      "Cucumbers"
+    ],
+    correct: 0,
+    wrong: "Do you even know who I am? 🙄"
+  },
+  {
+    question: "What is one thing I can't live without",
+    options: [
+      "My cats",
+      "My phone",
+      "Music",
+      "My vape"
+    ],
+    correct: 0,
+    wrong: "Unbelievable. Truly unbelievable. You think so little of me?"
+  },
+  {
+    question: "What's my dream vacation?",
+    options: [
+      "Italy",
+      "Oregon",
+      "Greece",
+      "Mexico"
+    ],
+    correct: 0,
+    wrong: "Guess we're not going there now 💀"
+  },
+  {
+    question: "Who is the funniest person in our relationship?",
+    options: [
+      "Chris",
+      "Reilly",
+      "Obviously Reilly",
+      "Still Reilly"
+    ],
+    correct: 2,
+    wrong: "WRONG. It's obviously me. 💅"
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function showScreen(id) {
+  ["start-screen", "quiz-screen", "result-screen"]
+    .forEach(screen => {
+      document.getElementById(screen)
+        .classList.toggle("hidden", screen !== id);
+    });
+}
+
+function startQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  document.getElementById("surprise")
+    .classList.add("hidden");
+  showScreen("quiz-screen");
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+
+  document.getElementById("progress").textContent =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+
+  document.getElementById("question").textContent =
+    q.question;
+
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("next-button")
+    .classList.add("hidden");
+
+  const container = document.getElementById("answers");
+  container.innerHTML = "";
+
+  q.options.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.className = "option";
+    button.textContent = answer;
+    button.onclick = () => checkAnswer(index);
+    container.appendChild(button);
+  });
+}
+
+function checkAnswer(selected) {
+  const q = questions[currentQuestion];
+  const buttons = document.querySelectorAll(".option");
+  const feedback = document.getElementById("feedback");
+
+  buttons.forEach(button => button.disabled = true);
+
+  if (selected === q.correct) {
+    score++;
+    buttons[selected].classList.add("correct");
+    feedback.textContent =
+      "Correct! Okay, maybe you do love me 💗";
+  } else {
+    buttons[selected].classList.add("wrong");
+    buttons[q.correct].classList.add("correct");
+    feedback.textContent = q.wrong;
+  }
+
+  document.getElementById("next-button")
+    .classList.remove("hidden");
+}
+
+function nextQuestion() {
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  showScreen("result-screen");
+
+  const percent = Math.round(
+    (score / questions.length) * 100
+  );
+
+  document.getElementById("final-score").textContent =
+    `${score}/${questions.length} — ${percent}%`;
+
+  const message = document.getElementById("result-message");
+
+  if (score === questions.length) {
+    message.textContent =
+      "100%?! YOU REALLY DO LOVE ME 😭💗";
+    document.getElementById("surprise")
+      .classList.remove("hidden");
+    celebrate();
+  } else if (percent >= 60) {
+    message.textContent =
+      "Not bad... but I expected more from my boyfriend 🙄";
+  } else {
+    message.textContent =
+      "Chris. We need to have a conversation. 💀";
+  }
+}
+
+function celebrate() {
+  const decorations = ["💗", "💕", "🎉", "✨", "💖"];
+
+  for (let i = 0; i < 60; i++) {
+    const heart = document.createElement("span");
+    heart.className = "heart";
+    heart.textContent = decorations[
+      Math.floor(Math.random() * decorations.length)
+    ];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize =
+      (16 + Math.random() * 20) + "px";
+    heart.style.animationDuration =
+      (3 + Math.random() * 3) + "s";
+    heart.style.animationDelay =
+      Math.random() * 2 + "s";
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8500);
+  }
+}
+</script>
+
+</body>
+</html>
