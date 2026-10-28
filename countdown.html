@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Something Is Coming ♡</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #412638, #160f1d 70%);
+      color: #fff0f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .eyebrow {
+      color: #ff9dbd;
+      font-size: 12px;
+      letter-spacing: 5px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 8vw, 75px);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      color: #cab6c5;
+      font-size: 17px;
+      margin-bottom: 45px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 35px;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 190, 215, 0.2);
+      border-radius: 12px;
+      padding: 24px 5px;
+    }
+
+    .number {
+      font-size: clamp(24px, 6vw, 48px);
+      font-weight: bold;
+      color: #ffb3cc;
+    }
+
+    .label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #cbb7c3;
+      margin-top: 10px;
+    }
+
+    .message {
+      color: #cdb6c4;
+      font-size: 14px;
+    }
+
+    #reveal {
+      display: none;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .reveal-btn {
+      display: inline-block;
+      background: #ffafca;
+      color: #351c2a;
+      padding: 18px 35px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 25px;
+      transition: 0.3s;
+    }
+
+    .reveal-btn:hover {
+      background: white;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .footer {
+      margin-top: 55px;
+      font-size: 12px;
+      color: #9c8192;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <p class="eyebrow">AN EXCLUSIVE RELEASE ♡</p>
+
+    <h1>Something<br>is coming.</h1>
+
+    <p class="subtitle">
+      A special release. One very special person.<br>
+      Made exclusively for Chris.
+    </p>
+
+    <div id="countdown-area">
+      <div class="countdown">
+        <div class="time-box">
+          <div class="number" id="days">00</div>
+          <div class="label">DAYS</div>
+        </div>
+
+        <div class="time-box">
+          <div class="number" id="hours">00</div>
+          <div class="label">HOURS</div>
+        </div>
+
+        <div class="time-box">
+          <div class="number" id="minutes">00</div>
+          <div class="label">MINUTES</div>
+        </div>
+
+        <div class="time-box">
+          <div class="number" id="seconds">00</div>
+          <div class="label">SECONDS</div>
+        </div>
+      </div>
+
+      <p class="message">
+        October 28, 2026 · 9:00 PM CDT<br>
+        The surprise is worth the wait. ♡
+      </p>
+    </div>
+
+    <div id="reveal" aria-live="polite">
+      <h2>It's finally here. ♡</h2>
+
+      <p>
+        Surprise, Chris!<br>
+        I made you something because I love you.
+      </p>
+
+      <a class="reveal-btn" href="./index.html">
+        OPEN YOUR SURPRISE ♡
+      </a>
+    </div>
+
+    <p class="footer">MADE WITH LOVE · FOR CHRIS</p>
+
+  </main>
+
+  <script>
+    // 9:00 PM Dallas time on October 28, 2026
+    // CDT is UTC-05:00 on this date.
+    const releaseDate =
+      new Date("2026-10-28T21:00:00-05:00").getTime();
+
+    const countdownArea =
+      document.getElementById("countdown-area");
+
+    const reveal =
+      document.getElementById("reveal");
+
+    function updateCountdown() {
+      const now = Date.now();
+      const distance = releaseDate - now;
+
+      if (distance <= 0) {
+        countdownArea.style.display = "none";
+        reveal.style.display = "block";
+        clearInterval(timer);
+        return;
+      }
+
+      const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+      );
+
+      const hours = Math.floor(
+        (distance / (1000 * 60 * 60)) % 24
+      );
+
+      const minutes = Math.floor(
+        (distance / (1000 * 60)) % 60
+      );
+
+      const seconds = Math.floor(
+        (distance / 1000) % 60
+      );
+
+      document.getElementById("days").textContent =
+        String(days).padStart(2, "0");
+
+      document.getElementById("hours").textContent =
+        String(hours).padStart(2, "0");
+
+      document.getElementById("minutes").textContent =
+        String(minutes).padStart(2, "0");
+
+      document.getElementById("seconds").textContent =
+        String(seconds).padStart(2, "0");
+    }
+
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
