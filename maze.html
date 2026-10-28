@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find Your Girlfriend 💗</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+* { box-sizing: border-box; }
+
+.game-box {
+  max-width: 620px;
+  margin: 35px auto;
+  padding: 28px 18px;
+  background: #fffdf8;
+  border: 2px solid #d4dfc8;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 8px 25px #40583a18;
+  color: #405b43;
+}
+
+.game-box h2, .game-box h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  color: #416348;
+}
+
+.game-box p { line-height: 1.7; }
+
+#maze {
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  width: min(100%, 455px);
+  aspect-ratio: 1;
+  margin: 20px auto;
+  border: 5px solid #a7bd9e;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fffaf0;
+}
+
+.cell {
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(11px, 3.5vw, 24px);
+}
+
+.wall { background: #789571; }
+.path { background: #fffaf0; }
+.player { background: #f8dee5; }
+.goal { background: #e7efdc; }
+
+#commentary {
+  min-height: 72px;
+  padding: 15px;
+  background: #f1e5d4;
+  border-radius: 14px;
+  font-weight: 800;
+  color: #6a594d;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 58px);
+  gap: 8px;
+  justify-content: center;
+  margin: 22px auto;
+}
+
+.controls button {
+  background: #dfe9d8;
+  border: 2px solid #a5b99c;
+  border-radius: 12px;
+  padding: 13px;
+  cursor: pointer;
+  font-size: 19px;
+  touch-action: manipulation;
+}
+
+.controls button:hover {
+  background: #c7d8bd;
+}
+
+.controls .up { grid-column: 2; }
+.controls .left { grid-column: 1; grid-row: 2; }
+.controls .down { grid-column: 2; grid-row: 2; }
+.controls .right { grid-column: 3; grid-row: 2; }
+
+.game-button {
+  background: #77946d;
+  color: white;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  margin: 10px;
+}
+
+.game-button:hover { background: #577750; }
+
+#victory {
+  background: #f9e9ef;
+  border: 2px solid #e9b7c7;
+  border-radius: 20px;
+  padding: 25px 18px;
+  margin-top: 20px;
+  animation: appear 0.6s ease;
+}
+
+#victory h2 { color: #c65d83; }
+
+.certificate {
+  padding: 20px;
+  border: 4px double #d4a3b3;
+  background: #fffdf8;
+  margin: 18px 0;
+}
+
+.hidden { display: none !important; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.confetti {
+  position: fixed;
+  top: -30px;
+  pointer-events: none;
+  z-index: 999;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #victory, .confetti { animation: none; }
+  .confetti { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+<ul>
+  <li><a href="index.html">Home</a></li>
+  <li><a href="why-i-love-you.html">Why I Love You</a></li>
+  <li><a href="bucket-list.html">Bucket List</a></li>
+  <li><a href="memories.html">Memories</a></li>
+  <li><a href="about-chris.html">All About Chris</a></li>
+  <li><a href="open-when.html">Open When</a></li>
+  <li><a href="quiz.html">💗 The Girlfriend Exam</a></li>
+  <li><a href="recipes.html">👨‍🍳 The Cookbook</a></li>
+  <li><a class="active" href="maze.html">Find Reilly</a></li>
+</ul>
+</nav>
+
+<header class="hero">
+  <span class="plant left">🌿</span>
+  <span class="plant right">💗</span>
+  <span class="eyebrow">A very serious mission</span>
+  <h1>Find Your Girlfriend ♡</h1>
+  <p>She's lost. Again. Can you find her?</p>
+</header>
+
+<main class="game-box">
+  <h2>Christopher, we have a problem.</h2>
+  <p>
+    Your girlfriend is somewhere in this maze.
+    Unfortunately, her boyfriend has been
+    entrusted with finding her.
+  </p>
+  <p>
+    You are 💗 and Reilly is 👑.
+    Don't embarrass yourself.
+  </p>
+
+  <div class="stats">
+    <span>Steps: <span id="steps">0</span></span>
+    <span>Walls attacked: <span id="bumps">0</span></span>
+  </div>
+
+  <div id="maze" aria-label="Maze game"></div>
+
+  <p id="commentary" aria-live="polite">
+    Good luck, handsome. You're going to need it.
+  </p>
+
+  <p>Use arrow keys, WASD, or these buttons:</p>
+
+  <div class="controls">
+    <button class="up" data-direction="up" aria-label="Up">↑</button>
+    <button class="left" data-direction="left" aria-label="Left">←</button>
+    <button class="down" data-direction="down" aria-label="Down">↓</button>
+    <button class="right" data-direction="right" aria-label="Right">→</button>
+  </div>
+
+  <button class="game-button" id="restart">
+    🔄 New Maze
+  </button>
+
+  <section id="victory" class="hidden" aria-live="polite">
+    <h2>YOU FOUND YOUR GIRLFRIEND!!! 💗</h2>
+    <p id="victory-roast"></p>
+
+    <div class="certificate">
+      <h3>🏆 Official Girlfriend GPS Certification™</h3>
+      <p>This certifies that Christopher has successfully located Reilly despite questionable navigational abilities.</p>
+      <p><strong>Status: Girlfriend successfully recovered.</strong></p>
+      <p>Signed, Reilly ♡</p>
+    </div>
+
+    <h3>But seriously...</h3>
+    <p>
+      No matter what, you always find your way
+      back to me. And no matter how complicated
+      life gets, I'll always find my way to you.
+    </p>
+    <p>
+      I love you, my favorite nerd. ♡
+    </p>
+
+    <button class="game-button" id="play-again">
+      Play Again 💕
+    </button>
+  </section>
+</main>
+
+<footer class="footer">Made with love 🌿</footer>
+
+<script>
+const SIZE = 13;
+const mazeElement = document.getElementById("maze");
+const commentary = document.getElementById("commentary");
+const stepsElement = document.getElementById("steps");
+const bumpsElement = document.getElementById("bumps");
+const victory = document.getElementById("victory");
+
+let maze = [];
+let player = { x: 1, y: 1 };
+let goal = { x: 11, y: 11 };
+let steps = 0;
+let bumps = 0;
+let won = false;
+
+const wallRoasts = [
+  "Bro. It's literally a wall. 💀",
+  "You drive like this too?",
+  "Christopher. Please use your eyeballs.",
+  "You're a SOFTWARE ENGINEER. Figure it out.",
+  "That's a wall, handsome. Not a suggestion.",
+  "I'm starting to understand your driving.",
+  "The wall isn't going to move because you're cute.",
+  "Are we navigating or aggressively guessing?",
+  "You know you can go around things, right?",
+  "Please tell me this isn't how you debug code."
+];
+
+const stepRoasts = [
+  "I'm literally right here, Christopher.",
+  "Babe? Do you need Google Maps?",
+  "Your girlfriend is waiting. No pressure.",
+  "I believe in you! Mostly.",
+  "Are we taking the scenic route?",
+  "You've been walking a lot. Are you avoiding me?",
+  "Try not to get distracted by Taco Bell.",
+  "I'm starting to think the cats could do better."
+];
+
+function randomItem(items) {
+  return items[Math.floor(Math.random() * items.length)];
+}
+
+function generateMaze() {
+  // Every starting cell is a wall.
+  maze = Array.from(
+    { length: SIZE },
+    () => Array(SIZE).fill(1)
+  );
+
+  // Carve a connected maze with randomized depth-first search.
+  const stack = [[1, 1]];
+  maze[1][1] = 0;
+
+  while (stack.length) {
+    const [x, y] = stack[stack.length - 1];
+
+    const neighbors = [
+      [x + 2, y, x + 1, y],
+      [x - 2, y, x - 1, y],
+      [x, y + 2, x, y + 1],
+      [x, y - 2, x, y - 1]
+    ].filter(([nx, ny]) =>
+      nx > 0 && nx < SIZE - 1 &&
+      ny > 0 && ny < SIZE - 1 &&
+      maze[ny][nx] === 1
+    );
+
+    if (neighbors.length === 0) {
+      stack.pop();
+      continue;
+    }
+
+    const [nx, ny, wx, wy] = randomItem(neighbors);
+    maze[wy][wx] = 0;
+    maze[ny][nx] = 0;
+    stack.push([nx, ny]);
+  }
+
+  // Start and goal are guaranteed connected.
+  player = { x: 1, y: 1 };
+  goal = { x: SIZE - 2, y: SIZE - 2 };
+}
+
+function drawMaze() {
+  mazeElement.replaceChildren();
+
+  for (let y = 0; y < SIZE; y++) {
+    for (let x = 0; x < SIZE; x++) {
+      const cell = document.createElement("div");
+
+      cell.className = "cell " +
+        (maze[y][x] === 1 ? "wall" : "path");
+
+      if (x === goal.x && y === goal.y) {
+        cell.className = "cell goal";
+        cell.textContent = "👑";
+      }
+
+      if (x === player.x && y === player.y) {
+        cell.className = "cell player";
+        cell.textContent = "💗";
+      }
+
+      mazeElement.appendChild(cell);
+    }
+  }
+}
+
+function move(dx, dy) {
+  if (won) return;
+
+  const nx = player.x + dx;
+  const ny = player.y + dy;
+
+  if (
+    nx < 0 || nx >= SIZE ||
+    ny < 0 || ny >= SIZE ||
+    maze[ny][nx] === 1
+  ) {
+    bumps++;
+    bumpsElement.textContent = bumps;
+    commentary.textContent = randomItem(wallRoasts);
+    return;
+  }
+
+  player = { x: nx, y: ny };
+  steps++;
+  stepsElement.textContent = steps;
+
+  if (steps % 8 === 0) {
+    commentary.textContent = randomItem(stepRoasts);
+  }
+
+  drawMaze();
+
+  if (nx === goal.x && ny === goal.y) {
+    winGame();
+  }
+}
+
+function winGame() {
+  won = true;
+
+  commentary.textContent =
+    "GIRLFRIEND LOCATED. RELATIONSHIP SAVED. 💗";
+
+  let roast;
+
+  if (bumps === 0) {
+    roast = "Not a single wall collision? Fine. I'll admit you're good at something. Just this once.";
+  } else if (bumps <= 5) {
+    roast = `Only ${bumps} wall collisions. Honestly, I'm impressed. Don't let it go to your head.`;
+  } else if (bumps <= 15) {
+    roast = `${bumps} wall collisions?! Thank God you're cute.`;
+  } else {
+    roast = `${bumps} WALL COLLISIONS?! CHRISTOPHER. I'M NEVER LETTING YOU DRIVE AGAIN.`;
+  }
+
+  document.getElementById("victory-roast").textContent =
+    `${roast} You took ${steps} steps to find me.`;
+
+  victory.classList.remove("hidden");
+  celebrate();
+  victory.scrollIntoView({
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto" : "smooth",
+    block: "start"
+  });
+}
+
+function celebrate() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  for (let i = 0; i < 55; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti";
+    piece.textContent = randomItem(["💗", "💕", "✨", "🎉"]);
+
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.fontSize = (16 + Math.random() * 16) + "px";
+    piece.style.animationDuration = (3 + Math.random() * 3) + "s";
+    piece.style.animationDelay = Math.random() * 1.5 + "s";
+
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 7000);
+  }
+}
+
+function newGame() {
+  generateMaze();
+  steps = 0;
+  bumps = 0;
+  won = false;
+  stepsElement.textContent = "0";
+  bumpsElement.textContent = "0";
+  commentary.textContent =
+    "New maze, same questionable navigation skills.";
+  victory.classList.add("hidden");
+  drawMaze();
+}
+
+const directions = {
+  ArrowUp: [0, -1],
+  ArrowDown: [0, 1],
+  ArrowLeft: [-1, 0],
+  ArrowRight: [1, 0],
+  w: [0, -1],
+  s: [0, 1],
+  a: [-1, 0],
+  d: [1, 0]
+};
+
+document.addEventListener("keydown", event => {
+  const key = event.key.startsWith("Arrow")
+    ? event.key
+    : event.key.toLowerCase();
+
+  if (!directions[key]) return;
+
+  const active = document.activeElement;
+  if (active && ["INPUT", "TEXTAREA", "SELECT"].includes(active.tagName)) {
+    return;
+  }
+
+  event.preventDefault();
+  move(...directions[key]);
+});
+
+document.querySelectorAll("[data-direction]").forEach(button => {
+  button.addEventListener("click", () => {
+    const dir = button.dataset.direction;
+    const moves = {
+      up: [0, -1],
+      down: [0, 1],
+      left: [-1, 0],
+      right: [1, 0]
+    };
+    move(...moves[dir]);
+  });
+});
+
+document.getElementById("restart")
+  .addEventListener("click", newGame);
+
+document.getElementById("play-again")
+  .addEventListener("click", newGame);
+
+newGame();
+</script>
+
+</body>
+</html>
