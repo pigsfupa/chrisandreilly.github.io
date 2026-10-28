@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Boyfriend Cookbook ♡</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+* { box-sizing: border-box; }
+
+.cookbook {
+  max-width: 1050px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.cookbook-intro {
+  text-align: center;
+  color: #48634b;
+  margin-bottom: 32px;
+}
+
+.cookbook-intro p {
+  line-height: 1.8;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.recipe-card {
+  background: #fffdf8;
+  border: 2px solid #dedac9;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px #526c4515;
+}
+
+.recipe-photo {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+  background: #e5eadc;
+}
+
+.photo-placeholder {
+  height: 190px;
+  display: grid;
+  place-items: center;
+  font-size: 65px;
+  background: #e5eadc;
+}
+
+.recipe-card:nth-child(even) .photo-placeholder {
+  background: #efe2d0;
+}
+
+.recipe-content {
+  padding: 22px;
+  color: #425744;
+}
+
+.recipe-content h2 {
+  color: #38553e;
+  font-family: 'Fraunces', Georgia, serif;
+  margin: 0 0 10px;
+}
+
+.stars {
+  color: #d79e48;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.review {
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.recipe-button {
+  background: #77946d;
+  color: white;
+  border: 0;
+  padding: 12px 18px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  margin-top: 12px;
+}
+
+.recipe-button:hover {
+  background: #587752;
+}
+
+.recipe-details {
+  border-top: 1px dashed #cbd6c5;
+  margin-top: 20px;
+  padding-top: 15px;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.recipe-details h3 {
+  color: #38553e;
+}
+
+.recipe-details ul,
+.recipe-details ol {
+  padding-left: 24px;
+}
+
+.hall-of-fame {
+  background: #e5ecdc;
+  border: 2px solid #c2d2bb;
+  border-radius: 22px;
+  padding: 28px;
+  text-align: center;
+  margin-top: 35px;
+  color: #38553e;
+}
+
+.hall-of-fame h2 {
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+.hall-of-fame p {
+  line-height: 1.8;
+}
+
+@media (max-width: 650px) {
+  .recipe-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="why-i-love-you.html">Why I Love You</a></li>
+    <li><a href="bucket-list.html">Bucket List</a></li>
+    <li><a href="memories.html">Memories</a></li>
+    <li><a href="about-chris.html">All About Chris</a></li>
+    <li><a href="open-when.html">Open When</a></li>
+    <li><a href="quiz.html">💗 The Girlfriend Exam</a></li>
+    <li><a class="active" href="recipes.html">The Cookbook</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <span class="plant left">🌿</span>
+  <span class="plant right">🍳</span>
+  <span class="eyebrow">Made with love</span>
+  <h1>The Boyfriend Cookbook ♡</h1>
+  <p>Chef Chris cooks. Reilly reviews. Everybody wins.</p>
+</header>
+
+<main class="cookbook">
+
+<section class="cookbook-intro">
+  <h2>Welcome to Chris's Kitchen 👨‍🍳</h2>
+  <p>
+    One of my favorite things about you is how
+    you always find ways to take care of me,
+    especially when it involves food.
+    So naturally, I had to make a whole
+    cookbook dedicated to your cooking.
+  </p>
+  <p>
+    Every meal is rated by your extremely
+    qualified, very beautiful girlfriend.
+    And yes, I'm completely unbiased.
+  </p>
+</section>
+
+<div class="recipe-grid" id="recipe-grid"></div>
+
+<section class="hall-of-fame">
+  <h2>🏆 Chef Chris Hall of Fame</h2>
+  <p>
+    Awarded to the man who keeps his girlfriend
+    happy, fed, and extremely spoiled.
+  </p>
+  <p>
+    Official ranking: 5 Michelin hearts.
+    Boyfriend privileges renewed.
+  </p>
+  <div class="stars">★★★★★</div>
+  <p><strong>Love, your favorite food critic ♡</strong></p>
+</section>
+
+</main>
+
+<footer class="footer">Made with love 🌿</footer>
+
+<script>
+
+/*
+  EDIT YOUR RECIPES HERE!
+
+  These three are sample placeholders.
+  Replace them with meals Chris has actually made.
+
+  For photos:
+  1. Upload an image into your chrisimages folder.
+  2. Put its path in the photo field.
+  Example: "chrisimages/pasta.jpg"
+
+  Leave photo: "" to show the emoji instead.
+*/
+
+const recipes = [
+  {
+    name: "Recipe #1 — Chris's Signature Dish",
+    emoji: "🍝",
+    photo: "",
+    review: "Placeholder review: Five stars. The chef is pretty cute too.",
+    ingredients: [
+      "Add ingredient here",
+      "Add another ingredient",
+      "Add quantities if you know them"
+    ],
+    steps: [
+      "Write the first cooking step.",
+      "Write the next cooking step.",
+      "Enjoy!"
+    ]
+  },
+  {
+    name: "Recipe #2 — A Favorite Dinner",
+    emoji: "🍲",
+    photo: "",
+    review: "Placeholder review: I'd absolutely let him cook this for me again.",
+    ingredients: [
+      "Add ingredient here",
+      "Add another ingredient"
+    ],
+    steps: [
+      "Write how Chris makes it.",
+      "Add the next step."
+    ]
+  },
+  {
+    name: "Recipe #3 — A Sweet Treat",
+    emoji: "🍪",
+    photo: "",
+    review: "Placeholder review: The dessert was sweet, but the chef is sweeter.",
+    ingredients: [
+      "Add ingredient here",
+      "Add another ingredient"
+    ],
+    steps: [
+      "Write the first step.",
+      "Write the second step."
+    ]
+  }
+];
+
+const grid = document.getElementById("recipe-grid");
+
+recipes.forEach((recipe, index) => {
+
+  const card = document.createElement("article");
+  card.className = "recipe-card";
+
+  const visual = recipe.photo
+    ? document.createElement("img")
+    : document.createElement("div");
+
+  if (recipe.photo) {
+    visual.className = "recipe-photo";
+    visual.src = recipe.photo;
+    visual.alt = recipe.name;
+    visual.loading = "lazy";
+  } else {
+    visual.className = "photo-placeholder";
+    visual.textContent = recipe.emoji;
+  }
+
+  card.appendChild(visual);
+
+  const content = document.createElement("div");
+  content.className = "recipe-content";
+
+  const title = document.createElement("h2");
+  title.textContent = recipe.name;
+
+  const stars = document.createElement("div");
+  stars.className = "stars";
+  stars.textContent = "★★★★★";
+
+  const review = document.createElement("p");
+  review.className = "review";
+  review.textContent = "Reilly's review: " + recipe.review;
+
+  const button = document.createElement("button");
+  button.className = "recipe-button";
+  button.textContent = "View Recipe ♡";
+
+  const details = document.createElement("div");
+  details.className = "recipe-details";
+  details.hidden = true;
+  details.id = "recipe-" + index;
+
+  button.setAttribute("aria-expanded", "false");
+  button.setAttribute("aria-controls", details.id);
+
+  const ingredientsTitle = document.createElement("h3");
+  ingredientsTitle.textContent = "Ingredients";
+
+  const ingredientList = document.createElement("ul");
+
+  recipe.ingredients.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    ingredientList.appendChild(li);
+  });
+
+  const stepsTitle = document.createElement("h3");
+  stepsTitle.textContent = "How Chris Makes It";
+
+  const stepsList = document.createElement("ol");
+
+  recipe.steps.forEach(step => {
+    const li = document.createElement("li");
+    li.textContent = step;
+    stepsList.appendChild(li);
+  });
+
+  details.append(
+    ingredientsTitle,
+    ingredientList,
+    stepsTitle,
+    stepsList
+  );
+
+  button.addEventListener("click", () => {
+    details.hidden = !details.hidden;
+
+    const isOpen = !details.hidden;
+
+    button.textContent = isOpen
+      ? "Close Recipe ♡"
+      : "View Recipe ♡";
+
+    button.setAttribute(
+      "aria-expanded",
+      String(isOpen)
+    );
+  });
+
+  content.append(title, stars, review, button, details);
+  card.appendChild(content);
+  grid.appendChild(card);
+});
+
+</script>
+
+</body>
+</html>
